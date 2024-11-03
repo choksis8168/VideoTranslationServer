@@ -1,8 +1,8 @@
-# Video Translation Client Library
+# Video Translation Server
 
 ## Introduction
 
-The Video Translation Client Library provides an efficient way to poll the status of a video translation job from a server. It uses adaptive polling with exponential backoff and jitter to minimize unnecessary requests and delays. This guide will help you understand how to install, configure, and use the client library in your projects.
+The Video Translation client library provides an efficient way to poll the status of a video translation job from a server. It uses adaptive polling with exponential backoff and jitter to minimize unnecessary requests and delays. This guide demonstrates how to use and configure the client library. 
 
 ---
 
@@ -126,4 +126,17 @@ The script will:
 - Use the client library to poll the server for the job status.
 - Print status updates and the final status.
 
-  
+## Implementation of Client
+
+Here, I will explain the rationale behind several core features implemented in the client. 
+
+### Asynchronous Polling
+
+Asynchronous programming is at the core of the client’s design, allowing it to make non-blocking HTTP requests. By leveraging `asyncio` and `aiohttp`, the client can wait for responses without blocking other tasks in the application. This asynchronous approach makes it suitable for applications that may need to perform other work while waiting for the job status. Rather than pausing the entire application to wait for each server response, asynchronous polling lets the client request updates, wait efficiently, and process results as they arrive, enhancing responsiveness and usability.
+
+### Exponential Backoff
+
+Polling a server too frequently can cause unnecessary load, especially if a job takes time to complete. To mitigate this, I had the client employ exponential backoff where the wait time between each polling attempt increases exponentially. For example, if the initial wait time is 1 second and the backoff factor is 2, the client will wait 1 second before the first retry, 2 seconds before the next, then 4, 8, and so on. This strategy reduces the frequency of requests over time, thereby decreasing server load and lowering costs. 
+
+### Jitter
+To further improve the polling mechanism, jitter (a small amount of randomness) is added to the wait times. By adding a random variation to each wait time, jitter helps ensure that requests from different clients are spread out, reducing the risk of spikes in server load. In the client, jitter is implemented as a small random value added to or subtracted from each backoff interval, ensuring that each retry interval is slightly unique.
