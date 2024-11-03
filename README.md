@@ -19,6 +19,7 @@ If you haven't already installed `aiohttp`, you can do so using `pip`:
 
 ```bash
 pip install aiohttp
+```
 
 ### Clone the Repository
 
@@ -26,6 +27,7 @@ Clone the repository containing the client library:
 
 ```bash
 git clone https://github.com/yourusername/video-translation-client.git
+```
 
 ---
 
@@ -35,6 +37,7 @@ In your Python script, import the VideoTranslationClient class:
 
 ```python
 from client import VideoTranslationClient
+```
 
 ### Example
 
@@ -56,7 +59,7 @@ async def main():
 # Run the asynchronous main function
 if __name__ == "__main__":
     asyncio.run(main())
-
+```
 
 ### Using a callback function
 
@@ -76,6 +79,7 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+```
 
 ### Configuring the client 
 
