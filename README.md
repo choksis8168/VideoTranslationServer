@@ -33,7 +33,7 @@ git clone https://github.com/yourusername/video-translation-client.git
 
 ## Usage
 
-In your Python script, import the VideoTranslationClient class:
+In your Python script, import the `VideoTranslationClient` class:
 
 ```python
 from client import VideoTranslationClient
@@ -83,12 +83,47 @@ if __name__ == "__main__":
 
 ### Configuring the client 
 
-The VideoTranslationClient class provides several parameters to customize its behavior:
+The `VideoTranslationClient` class provides several parameters to customize its behavior:
 
-base_url (str): The base URL of the server.
-max_attempts (int): Maximum number of polling attempts (default: 10).
-max_wait_time (int): Maximum total wait time in seconds (default: 60).
-initial_wait_time (float): Initial wait time between attempts in seconds (default: 1.0).
-backoff_factor (float): Multiplier for exponential backoff (default: 2.0).
-jitter (float): Maximum amount of random jitter to add to wait times (default: 0.5).
+- `base_url (str)`: The base URL of the server.
+- `max_attempts (int)`: Maximum number of polling attempts (default: 10).
+- `max_wait_time (int)`: Maximum total wait time in seconds (default: 60).
+- `initial_wait_time (float)`: Initial wait time between attempts in seconds (default: 1.0).
+- `backoff_factor (float)`: Multiplier for exponential backoff (default: 2.0).
+- `jitter (float)`: Maximum amount of random jitter to add to wait times (default: 0.5).
 
+### Handling Errors and Timeouts
+
+The `get_status` method returns the final status of the job, which can be one of the following:
+
+- `'completed'`: The job completed successfully.
+- `'error'`: The job encountered an error.
+- `'timeout'`: The polling operation timed out based on the max_attempts or max_wait_time parameters.
+
+## Running the Test
+
+A test script is provided to demonstrate the usage of the client library in conjunction with the server.
+
+### Starting the Server
+
+Start the server as follows: 
+
+```bash
+python server.py
+```
+
+The server will start listening on `http://127.0.0.1:5000`.
+
+### Running the Test Script
+
+```bash
+python test.py
+```
+
+The script will:
+
+- Start the server (if not already running).
+- Use the client library to poll the server for the job status.
+- Print status updates and the final status.
+
+  
